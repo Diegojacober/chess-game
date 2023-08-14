@@ -1,9 +1,11 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
+
 
 public class ChessMatch {
 
@@ -45,5 +47,18 @@ public class ChessMatch {
         placeNewPiece('f' , 7, new King(board, Color.BLACK));
         placeNewPiece('d' , 3, new Rook(board, Color.WHITE));
         placeNewPiece('c' , 1, new King(board, Color.BLACK));
+    }
+
+    private Piece makeMove(Position source, Position target) {
+        Piece p = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        board.placePiece(p, target);
+        return capturedPiece;
+    }
+
+    public void validateSourcePosition(Position position) {
+        if (!board.thereIsAPiece(position)) {
+            throw new ChessException("The is no piece on source position");
+        }
     }
 }
